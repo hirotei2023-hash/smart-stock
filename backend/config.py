@@ -1,5 +1,4 @@
 from pathlib import Path
-import yaml
 
 ROOT = Path(__file__).parent.parent
 DATA_DIR = ROOT / "data"
@@ -8,9 +7,6 @@ DATA_DIR.mkdir(exist_ok=True)
 DB_PATH = DATA_DIR / "stock.db"
 MODEL_DIR = ROOT / "models_saved"
 MODEL_DIR.mkdir(exist_ok=True)
-
-with open(ROOT / "config" / "default.yaml") as f:
-    defaults = yaml.safe_load(f)
 
 # 股票池：沪深300（Phase 1）
 HS300_STOCKS: list[str] = []  # 运行时从 akshare 获取
