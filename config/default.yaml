@@ -1,0 +1,20 @@
+strategy:
+  name: "default"
+  position_size: 0.2        # 单票仓位
+  max_positions: 5          # 最多同时持有
+  stop_loss_pct: -0.08      # 止损线 -8%
+  take_profit_pct: 0.20     # 止盈线 +20%
+
+backtest:
+  initial_capital: 100000
+  start_date: "2024-01-01"
+  end_date: "2026-05-25"
+
+signals:
+  min_composite_score: 70   # 最低综合评分
+  min_confidence: 0.65      # 最低置信度
+
+alerts:
+  ma_periods: [5, 10, 20, 60]
+  volume_spike_ratio: 2.0
+  drop_threshold: -0.03
