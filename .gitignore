@@ -7,7 +7,6 @@ dist/
 
 # Node
 node_modules/
-frontend/dist/
 
 # Models & Data
 models_saved/
