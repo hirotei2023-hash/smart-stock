@@ -21,6 +21,14 @@ export interface SignalData {
   up_20d_prob: number;
   market_regime: string;
   risk_flags: string;
+  // 从 rule_signals 解析出的字段（前端用）
+  _parsed?: {
+    vp_score: number;
+    char_score: number;
+    limit_up_year: number;
+    limit_up_month: number;
+    vol_ratio: number;
+  };
 }
 
 export interface SummaryData {
@@ -34,6 +42,7 @@ export interface SummaryData {
 export interface AlertData {
   id: number;
   ts_code: string;
+  name?: string;
   alert_type: string;
   severity: "warning" | "danger" | "info";
   message: string;
@@ -61,6 +70,7 @@ export interface EquityPoint {
 
 export interface Trade {
   ts_code: string;
+  name?: string;
   date: string;
   type: "buy" | "sell";
   reason?: string;
@@ -80,4 +90,29 @@ export interface StockInfo {
   ts_code: string;
   name: string;
   industry?: string;
+}
+
+export interface GainerRow {
+  ts_code: string;
+  name: string;
+  ret_1y?: number | null;
+  ret_1m?: number | null;
+  ret_mtd?: number | null;
+  ret_ytd?: number | null;
+  pct_chg?: number | null;
+  ipo_ret?: number | null;
+  lu_year: number;
+  lu_month: number;
+  close: number;
+  ipo_date?: string;
+}
+
+export interface TopData {
+  date: string;
+  year_top: GainerRow[];
+  month_top: GainerRow[];
+  new_listings: GainerRow[];
+  available_dates: string[];
+  rank_change_month: Record<string, number>;
+  rank_change_year: Record<string, number>;
 }

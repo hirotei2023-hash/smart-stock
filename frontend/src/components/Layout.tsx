@@ -3,6 +3,7 @@ import React from "react";
 const NAV_ITEMS = [
   { label: "信号看板", key: "dashboard" },
   { label: "回测中心", key: "backtest" },
+  { label: "涨幅排行", key: "ranking" },
   { label: "预警管理", key: "alerts" },
 ];
 

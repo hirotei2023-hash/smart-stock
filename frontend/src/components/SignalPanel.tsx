@@ -2,7 +2,18 @@ import React from "react";
 import type { SignalData } from "../types";
 
 function parseSignals(jsonStr: string): string[] {
-  try { return JSON.parse(jsonStr); } catch { return []; }
+  try {
+    const parsed = JSON.parse(jsonStr);
+    if (Array.isArray(parsed)) return parsed;
+    // 新评分格式: {vp_score, char_score, limit_up_year, limit_up_month, vol_ratio}
+    return [
+      `量价${parsed.vp_score ?? "?"}`,
+      `股性${parsed.char_score ?? "?"}`,
+      `年涨停${parsed.limit_up_year ?? 0}次`,
+      `月涨停${parsed.limit_up_month ?? 0}次`,
+      `量比${parsed.vol_ratio ?? 0}x`,
+    ];
+  } catch { return []; }
 }
 
 export function SignalPanel({ signal, onClose }: { signal: SignalData; onClose: () => void }) {

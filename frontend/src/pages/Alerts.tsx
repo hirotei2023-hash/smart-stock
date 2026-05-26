@@ -100,6 +100,17 @@ export function Alerts() {
       </div>
 
       <h3 style={{ marginBottom: 12 }}>预警记录</h3>
+      {alerts.length > 0 && (
+        <div style={{ marginBottom: 12 }}>
+          <button onClick={async () => {
+            await api.clearAlerts();
+            setAlerts([]);
+          }} style={{
+            padding: "4px 14px", background: "transparent", color: "#94a3b8",
+            border: "1px solid #334155", borderRadius: 4, cursor: "pointer", fontSize: 12,
+          }}>清空记录</button>
+        </div>
+      )}
       {alerts.map((a) => (
         <div key={a.id} style={{
           padding: 12, marginBottom: 8, background: "#1a1a2e",
@@ -109,6 +120,7 @@ export function Alerts() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
               <span style={{ fontFamily: "monospace", marginRight: 8 }}>{a.ts_code}</span>
+              {a.name && <span style={{ marginRight: 8, color: "#94a3b8" }}>{a.name}</span>}
               <AlertBadge severity={a.severity} />
               <span style={{ marginLeft: 8 }}>{a.message}</span>
             </div>

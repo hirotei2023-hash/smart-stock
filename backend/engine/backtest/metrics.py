@@ -59,7 +59,7 @@ def profit_loss_ratio(trades: list[dict]) -> float:
     losses = [abs(t["pnl"]) for t in trades if t["pnl"] < 0]
     if not losses or not wins:
         return 0.0
-    return round(np.mean(wins) / np.mean(losses), 4)
+    return round(float(np.mean(wins) / np.mean(losses)), 4)
 
 
 def compute_all_metrics(equity_curve: pd.Series, trades: list[dict]) -> dict:

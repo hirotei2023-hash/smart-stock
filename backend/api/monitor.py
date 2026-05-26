@@ -51,11 +51,22 @@ def check_stock(ts_code: str):
     return {"ts_code": ts_code, "date": today, "alerts": alerts}
 
 
+@router.delete("/alerts")
+def clear_alerts():
+    conn = get_connection()
+    conn.execute("DELETE FROM alerts")
+    conn.commit()
+    conn.close()
+    return {"ok": True}
+
+
 @router.get("/alerts")
 def get_alerts(limit: int = 50):
     conn = get_connection()
     rows = conn.execute(
-        "SELECT * FROM alerts ORDER BY triggered_at DESC LIMIT ?", (limit,)
+        """SELECT a.*, COALESCE(b.name, '') as name
+           FROM alerts a LEFT JOIN stock_basic b ON a.ts_code = b.ts_code
+           ORDER BY a.triggered_at DESC LIMIT ?""", (limit,)
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]

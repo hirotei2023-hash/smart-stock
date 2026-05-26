@@ -8,11 +8,12 @@ DB_PATH = DATA_DIR / "stock.db"
 MODEL_DIR = ROOT / "models_saved"
 MODEL_DIR.mkdir(exist_ok=True)
 
-# 股票池：沪深300（Phase 1）
+# 股票池：沪深300 + 中证500（Phase 2）
 HS300_STOCKS: list[str] = []  # 运行时从 akshare 获取
+CSI500_STOCKS: list[str] = []
 
 # 数据参数
-DATA_YEARS = 2
+DATA_YEARS = 6
 DATA_CYCLE = "daily"  # daily/weekly/monthly
 
 # 模型参数

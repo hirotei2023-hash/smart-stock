@@ -13,7 +13,7 @@ def compute_composite_score(rule_hits: int, total_rules: int,
                             confidence: float, up_prob: float) -> float:
     """综合评分：规则命中 + 模型概率 加权"""
     rule_score = min(rule_hits / max(total_rules, 1), 1.0) * 40
-    model_score = ((confidence + up_prob) / 2) * 60
+    model_score = 30 + (confidence - 0.5) * 60  # 0.5→30分(中性), 1.0→60分
     return round(rule_score + model_score, 1)
 
 
@@ -67,7 +67,7 @@ def daily_scan(conn, model, scaler, feature_cols) -> list[dict]:
     results = []
     for (ts_code,) in stocks:
         sig = scan_stock(ts_code, conn, model, scaler, feature_cols)
-        if sig and sig["composite_score"] >= 60:  # 最低 60 分入库
+        if sig and sig["composite_score"] >= 50:  # 最低 50 分入库
             conn.execute(
                 """INSERT OR REPLACE INTO signals
                    (ts_code, trade_date, composite_score, rule_signals,

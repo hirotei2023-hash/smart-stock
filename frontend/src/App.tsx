@@ -3,6 +3,7 @@ import { Layout } from "./components/Layout";
 import { Dashboard } from "./pages/Dashboard";
 import { Backtest } from "./pages/Backtest";
 import { Alerts } from "./pages/Alerts";
+import { Ranking } from "./pages/Ranking";
 
 export default function App() {
   const [page, setPage] = useState("dashboard");
@@ -11,6 +12,7 @@ export default function App() {
     <Layout active={page} onNavigate={setPage}>
       {page === "dashboard" && <Dashboard />}
       {page === "backtest" && <Backtest />}
+      {page === "ranking" && <Ranking />}
       {page === "alerts" && <Alerts />}
     </Layout>
   );
