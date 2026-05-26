@@ -13,14 +13,18 @@ sudo apt install -y -qq python3 python3-pip python3-venv git
 
 # 2. 拉取代码
 echo "[2/5] 拉取项目代码..."
-cd /opt
-sudo git clone https://github.com/hirotei2023-hash/smart-stock.git 2>/dev/null || (cd smart-stock && sudo git pull)
+if [ -d /opt/smart-stock ]; then
+  cd /opt/smart-stock && sudo git pull
+else
+  cd /opt && sudo git clone https://github.com/hirotei2023-hash/smart-stock.git
+fi
 sudo chown -R $USER:$USER /opt/smart-stock
 
-# 3. 安装 Python 依赖
+# 3. 安装 Python 依赖（服务端精简版，不含 akshare/torch/lightgbm）
 echo "[3/5] 安装 Python 依赖..."
 cd /opt/smart-stock
-pip3 install -r backend/requirements.txt --break-system-packages 2>/dev/null || pip3 install -r backend/requirements.txt
+pip3 install --upgrade pip --break-system-packages 2>/dev/null || pip3 install --upgrade pip
+pip3 install -r requirements-server.txt --break-system-packages 2>/dev/null || pip3 install -r requirements-server.txt
 
 # 4. 创建 systemd 服务（开机自启）
 echo "[4/5] 配置开机自启..."
